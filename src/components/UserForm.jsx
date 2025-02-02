@@ -1,15 +1,17 @@
 import React from 'react';
-import { Form, Formik } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Typography, TextField, Button, FormControl, FormHelperText } from '@material-ui/core';
+import { Typography, TextField, Button } from '@material-ui/core';
 
-const LoginForm = () => {
+const UserForm = () => {
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
       validationSchema={Yup.object({
-        email: Yup.string().email("Must be a Valid Email").required("Email is Required").trim().max(100,"Email must be at max 100 charater").lowercase(),
-        password: Yup.string().required("Password is required").min(8 ,"PAssword must be at least 8 ").trim(),
+        email: Yup.string().email().required().trim().max(100).lowercase(),
+        password: Yup.string().required().min(8).trim(),
+        firstName: Yup.string().required().trim().max(100),
+        lastName: Yup.string().required().trim().max(100),
       })}
       onSubmit={(values) => {
         console.log(values);
@@ -29,25 +31,26 @@ const LoginForm = () => {
             }}
           >
             <Typography variant='h4'>Login</Typography>
-            <FormControl>
             <TextField
               fullWidth
               label='Email'
               {...formik.getFieldProps('email')}
             />
-            {formik.touched.email && formik.errors.email ? (
-                <FormHelperText error>{formik.errors.email}</FormHelperText>):null}
-            </FormControl>
-
-            <FormControl>
             <TextField
               fullWidth
               label='Password'
               {...formik.getFieldProps('password')}
             />
-            {formik.touched.password && formik.errors.password ? (
-                <FormHelperText error>{formik.errors.password}</FormHelperText>):null}
-            </FormControl>
+               <TextField
+              fullWidth
+              label='FirstName'
+              {...formik.getFieldProps('FirstName')}
+            />
+                <TextField
+              fullWidth
+              label='LastName'
+              {...formik.getFieldProps('LastName')}
+            />
             <Button variant='contained' color='primary' type='submit'>
               Login
             </Button>
@@ -58,4 +61,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default UserForm;
